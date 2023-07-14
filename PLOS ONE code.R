@@ -119,7 +119,7 @@ datCase%>%
   table(exclude= F)
 
 
-# HYPOTHEIS 3 ------------------------------------------------------
+# HYPOTHEIS 2 ------------------------------------------------------
 
 # Reading dataset ----
 setwd("O:/AFHS-DATA/Analysis/Shiyu/GSRA")
@@ -286,6 +286,62 @@ table(datM3$phase_M3, datM3$FinalAaporCategory_M3, exclude= F) #numerator
 table(datM3$democat12, exclude= F) #denominator
 
 table(datM3$phase_M3, datM3$FinalAaporCategory_M3, datM3$democat12, exclude= F) #numerator
+
+
+
+
+# TELEPHONE REMINDER DESCRIPTIVE ANALYSIS------------------------------------------------------
+
+## Full ----
+table(caselevel_phase$offeredFull, exclude= F)
+datFul<- caselevel_phase%>%
+  dplyr::filter(offeredFull==1) #subset those offered Full questionnaire
+dim(datFul) #766 
+
+table(datFul$phase_Full, datFul$FinalAaporCategory_F, exclude= F) #numerator
+
+
+## M1 ----
+table(caselevel_phase$offeredM1, exclude= F)
+datM1<- caselevel_phase%>%
+  dplyr::filter(offeredM1==1) #subset those offered M1 questionnaire
+dim(datM1) #746
+
+table(datM1$phase_M1, datM1$FinalAaporCategory_M1, exclude= F) #numerator
+
+
+## M2 ----
+caselevel_phase<- caselevel_phase%>%
+  dplyr::mutate(offeredM2Ever= dplyr::case_when(
+    offeredM2==1| offeredM1M2==1  ~ 1,
+    TRUE~ 0
+  ))
+table(caselevel_phase$offeredM2Ever, exclude= F)
+
+datM2<- caselevel_phase%>%
+  dplyr::filter(offeredM2Ever==1)#subset those offered M2 questionnaire
+dim(datM2) #737
+
+table(datM2$phase_M2, datM2$FinalAaporCategory_M2, exclude= F) #numerator
+
+
+## M3 ----
+caselevel_phase<- caselevel_phase%>%
+  dplyr::mutate(offeredM3Ever= dplyr::case_when(
+    offeredM3==1| offeredM2M3==1  ~ 1,
+    TRUE~ 0
+  ))
+table(caselevel_phase$offeredM3Ever, exclude= F)
+
+datM3<- caselevel_phase%>%
+  dplyr::filter(offeredM3Ever==1)#subset those offered M3 questionnaire
+dim(datM3) #460
+
+table(datM3$phase_M3, datM3$FinalAaporCategory_M3, exclude= F) #numerator
+
+
+
+
 
 
 
